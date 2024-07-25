@@ -1,10 +1,19 @@
+import 'package:copartner_assignment/providers/controllers/expert_provider.dart';
+import 'package:copartner_assignment/providers/controllers/tab_provider.dart';
 import 'package:copartner_assignment/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TabProvider()),
+        ChangeNotifierProvider(create: (context) => ExpertProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -12,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       title: 'Copartner Assignments',
       theme: ThemeData(
 

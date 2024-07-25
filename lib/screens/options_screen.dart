@@ -1,16 +1,19 @@
+
+
+import 'package:copartner_assignment/widgets/expert_plan_card.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class OptionsScreen extends StatelessWidget {
-  OptionsScreen({super.key});
-
+class ExpertsScreen extends StatelessWidget {
+  ExpertsScreen( {super.key,  required this.experts});
+ final List<dynamic> experts;
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -18,25 +21,28 @@ class OptionsScreen extends StatelessWidget {
               "Subscription",
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 22,
+                  fontSize: 17,
                   fontWeight: FontWeight.w500),
             ),
-            // ListView(scrollDirection: Axis.vertical,
-            //
-            //   children: [
-            //   _ExpertCard(),
-            //   _ExpertCard(),
-            //   _ExpertCard(),
-            // ],),
+
             ListView.builder(
 
-              physics: ScrollPhysics(),
-              itemCount: 3,
-              padding:EdgeInsets.only(top: 1) ,
+              physics: const ScrollPhysics(),
+              itemCount: experts.length,
+              padding:const EdgeInsets.only(top: 1) ,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
-                return _ExpertCard();
+                final expert = experts[index];
+                // return Text(expert['experts']['legalName'].toString(), style: TextStyle(fontSize: 30 , color: Colors.white),);
+                return _ExpertCard(
+                    expert['experts']['name'].toString(),
+                    expert['experts']['legalName'].toString(),
+                    expert['experts']['expertImagePath'].toString(),
+                    expert['durationMonth'],
+                    expert['discountedAmount'],
+                    expert['amount'],
+                );
               },
             )
           ],
@@ -45,7 +51,7 @@ class OptionsScreen extends StatelessWidget {
     );
   }
 
-  Widget _ExpertCard() {
+  Widget _ExpertCard(String? channelName, legalName , imageUrl,int duration, double discountedAmount , double amount ) {
     return Card(
       elevation: 1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -54,35 +60,40 @@ class OptionsScreen extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 20.0),
         child: Column(
           children: [
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: CircleAvatar(
-                child: Icon(Icons.person),
-              ),
-              title: Text("Channel Name",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
-              subtitle: Text("Expert Name",
-                  style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400)),
-              trailing: TextButton.icon(
-                onPressed: () {},
-                label: const Text(
-                  "SEBI Reg.",
-                  style: TextStyle(color: Colors.white),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: ListTile(isThreeLine: false,
+                dense: true,
+                contentPadding: EdgeInsets.zero,
+                leading:  CircleAvatar(
+                  child: Image(image: NetworkImage("$imageUrl")),
                 ),
-                icon: Icon(
-                  Icons.verified_rounded,
-                  color: Colors.blue,
+                title:  Text(channelName!,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400)),
+                subtitle: Text(legalName,
+                    style: const TextStyle(
+                        color: Colors.white54,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400)),
+                trailing: TextButton.icon(
+                  onPressed: () {},
+                  label: const Text(
+                    "SEBI Reg.",
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                  icon: const Icon(
+                    Icons.verified_rounded,
+                    color: Colors.blue,
+                    size: 12,
+                  ),
                 ),
               ),
             ),
-            _ExpertPlanCard(),
-            SizedBox(height: 15),
+             ExpertPlanCard(discountedAmount: discountedAmount,amount: amount, duration: duration,),
+            const SizedBox(height: 15),
             SmoothPageIndicator(
               controller: controller,
               count: 5,
@@ -100,123 +111,5 @@ class OptionsScreen extends StatelessWidget {
     );
   }
 
-  Widget _ExpertPlanCard() {
-    return Card(
-      color: Colors.transparent,
-      margin: const EdgeInsets.symmetric(horizontal: 15),
-      elevation: 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
-        side: const BorderSide(
-          color: Colors.white12,
-          width: 2.0,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Plan Type",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                  width: 130,
-                ),
-                Text(
-                  "10:00 AM",
-                  style: TextStyle(
-                      color: Colors.white60,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Text(
-                  "Amount :",
-                  style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 13, vertical: 1),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white.withOpacity(0.2),
-                  ),
-                  child: Text(
-                    "1,999",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Text(
-                  "Duration :",
-                  style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "2 Month",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "Discount :",
-                  style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "30%",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
 }

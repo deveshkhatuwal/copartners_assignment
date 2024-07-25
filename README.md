@@ -1,16 +1,22 @@
-# copartner_assignment
+This Flutter application displays expert subscription details fetched from an API. It organizes and displays data using tabs for different service types.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Features
+Fetch and display expert subscription details from an API.
+Organize data by service types: Options, Equity, and Commodity.
+Display expert details including image, rating, experience, and contact information.
+Show subscription plans and pricing.
+Getting Started
+Prerequisites
+Flutter SDK: Install Flutter
+A text editor or IDE: Android Studio or Visual Studio Code
+lib/
+├── main.dart               # Entry point of the application
+├── models/
+│   └── expert.dart         # Expert model combining expert details and subscription
+├── providers/
+│   └── tab_provider.dart   # Provider for managing tab data and state 
+    └── expert_provider.dart   # Provider for managing expert data and state
+├── screens/
+│   └── home_screen.dart    # Main screen displaying expert data
+└── widgets/
+└── expert_card.dart    # Widget for displaying individual expert details
