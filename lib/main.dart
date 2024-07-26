@@ -1,5 +1,5 @@
-import 'package:copartner_assignment/providers/controllers/expert_provider.dart';
-import 'package:copartner_assignment/providers/controllers/tab_provider.dart';
+import 'package:copartner_assignment/providers/expert_provider.dart';
+import 'package:copartner_assignment/providers/tab_provider.dart';
 import 'package:copartner_assignment/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

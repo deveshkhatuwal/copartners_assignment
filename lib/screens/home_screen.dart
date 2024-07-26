@@ -1,8 +1,8 @@
-import 'package:copartner_assignment/providers/controllers/expert_provider.dart';
+import 'package:copartner_assignment/providers/expert_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:copartner_assignment/screens/options_screen.dart';
+import 'package:copartner_assignment/screens/experts_screen.dart';
 import 'package:provider/provider.dart';
-import '../providers/controllers/tab_provider.dart';
+import '../providers/tab_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
